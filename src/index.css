@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+@import "tailwindcss";
+
+:root {
+  --font-sans: "Kumbh Sans";
+  --font-serif: "Roboto Slab";
+  --font-mono: "Space Mono";
+
+  --color-white: #fff;
+
+  --color-blue-50: #eff1fa;
+  --color-blue-850: #1e213f;
+  --color-blue-900: #161932;
+
+  --color-red-400: #f87070;
+
+  --color-cyan-300: #70f3f8;
+
+  --color-purple-400: #d881f8;
+
+  --color-grey-200: #e3e1e1;
+}
+
+@theme {
+  --color-white: var(--color-white);
+
+  --color-blue-50: var(--color-blue-50);
+  --color-blue-850: var(--color-blue-850);
+  --color-blue-900: var(--color-blue-900);
+
+  --color-red-400: var(--color-red-400);
+
+  --color-cyan-300: var(--color-cyan-300);
+
+  --color-purple-400: var(--color-purple-400);
+
+  --color-gray-200: var(--color-grey-200);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+}
+
+@utility text-preset-1 {
+  color: var(--colors-blue-900, #161932);
+
+  /* Text Preset 1 (Settings) - Kumbh Sans Bold - 28px - 125% Line Height - 0px Line Spacing */
+  font-family: "Kumbh Sans";
+  font-size: 1.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%; /* 2.1875rem */
+}
+
+@utility text-preset-2 {
+  color: var(--colors-white, #fff);
+  text-align: center;
+
+  /* Text Preset 2 (Settings, Font 1) - Kumbh Sans Bold - 16px - 125% Line Height - 0px Line Spacing */
+  font-family: "Kumbh Sans";
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%; /* 1.25rem */
+}
+
+@utility text-preset-3 {
+  color: var(--colors-blue-850, #1e213f);
+
+  /* Text Preset 3 (Settings) - Kumbh Sans Bold - 13px - 125% Line Height - 5px Line Spacing */
+  font-family: "Kumbh Sans";
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%; /* 1.01563rem */
+  letter-spacing: 0.3125rem;
+}
+
+@utility text-preset-4 {
+  color: var(--colors-blue-850, #1e213f);
+
+  /* Text Preset 4 (Settings) - Kumbh Sans Bold - 12px - 125% Line Height - 0px Line Spacing */
+  font-family: "Kumbh Sans";
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%;
+}
+
+@utility text-preset-5 {
+  color: var(--colors-blue-900, #161932);
+  text-align: center;
+  font-family: "Kumbh Sans";
+  font-size: 0.6875rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.26444rem;
+}
+
+@utility separator {
+  width: 100%;
+  height: 0.0625rem;
+  background: var(--colors-grey-200, #e3e1e1);
+}
+
+@utility sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  border-width: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
