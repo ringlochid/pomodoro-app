@@ -10,7 +10,7 @@ export function ProgressRing({ progress }: { progress: number }): JSX.Element {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 249 249"
-      className="pointer-events-none absolute inset-3 md:inset-4 lg:inset-5"
+      className="pointer-events-none absolute h-[84%] w-[84%] "
     >
       <circle
         cx="124.5"
@@ -55,9 +55,7 @@ export function TimerContainer({
   return (
     <div className="absolute inset-4 grid place-items-center rounded-full bg-blue-900 md:inset-5 lg:inset-6">
       <div className="flex flex-col items-center gap-4 md:gap-5">
-        <h2 className="timer-text text-7xl md:text-8xl lg:text-9xl">
-          {time}
-        </h2>
+        <h2 className="timer-text text-7xl md:text-8xl lg:text-9xl">{time}</h2>
         <ActionButton onClick={handleTimerAction} label={buttonLabel} />
       </div>
     </div>
