@@ -42,7 +42,6 @@ export function TimerContainer(): JSX.Element {
 }
 
 export function ClockContainer(): JSX.Element {
-  useSettingEffect();
   return (
     <div className="grid place-items-center aspect-square relative gap-0 size-75 clock-container">
       <TimerContainer />

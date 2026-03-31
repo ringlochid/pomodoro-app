@@ -1,4 +1,5 @@
-import type { JSX } from "react";
+import { useCallback, useContext, useEffect, useState, type JSX } from "react";
+import { useSetting } from "../hooks/useSetting";
 
 type RadioGroupType = "font" | "color";
 
@@ -42,12 +43,13 @@ const radioGroupConfig: Record<RadioGroupType, RadioGroupConfig> = {
   },
 };
 
-export function CloseButton(): JSX.Element {
+export function CloseButton({ onClick }: { onClick: () => void }): JSX.Element {
   return (
     <button
       type="button"
       name="close"
       className="m-0 grid h-[0.7955rem] w-[0.7955rem] cursor-pointer appearance-none place-items-center border-0 bg-transparent p-0"
+      onClick={onClick}
       aria-label="close button"
     >
       <svg
@@ -68,12 +70,19 @@ export function CloseButton(): JSX.Element {
   );
 }
 
-export function ArrowButton({ isUp }: { isUp: boolean }): JSX.Element {
+export function ArrowButton({
+  isUp,
+  onClick,
+}: {
+  isUp: boolean;
+  onClick: () => void;
+}): JSX.Element {
   return (
     <button
       type="button"
       className="m-0 grid h-4 w-4 cursor-pointer appearance-none place-items-center border-0 bg-transparent p-0"
       aria-label="change time button"
+      onClick={onClick}
     >
       {isUp ? (
         <svg
@@ -111,12 +120,28 @@ export function ArrowButton({ isUp }: { isUp: boolean }): JSX.Element {
 export function NumberInput({
   id,
   title,
-  currentValue,
+  defaultValue,
+  handleChange,
 }: {
   id: string;
   title: string;
-  currentValue: number;
+  defaultValue: number;
+  handleChange: (id: string, value: number) => void;
 }): JSX.Element {
+  const [value, setValue] = useState(defaultValue);
+
+  const handleUpClick = useCallback(() => {
+    setValue((prevValue) => Math.min(prevValue + 1, 60));
+  }, [setValue]);
+
+  const handleDownClick = useCallback(() => {
+    setValue((prevValue) => Math.max(prevValue - 1, 1));
+  }, [setValue]);
+
+  useEffect(() => {
+    handleChange(id, value);
+  }, [id, value, handleChange]);
+
   return (
     <div className="flex w-full items-center justify-between gap-4">
       <label htmlFor={id} className="text-preset-4 opacity-40">
@@ -127,7 +152,7 @@ export function NumberInput({
           type="text"
           id={id}
           name="id"
-          value={currentValue}
+          value={value}
           min={1}
           max={60}
           readOnly
@@ -135,8 +160,8 @@ export function NumberInput({
           className="block min-w-0 flex-1 bg-transparent text-preset-3 tracking-normal outline-none"
         />
         <div className="ml-4 flex shrink-0 flex-col items-center gap-0.5">
-          <ArrowButton isUp={true} />
-          <ArrowButton isUp={false} />
+          <ArrowButton isUp={true} onClick={handleUpClick} />
+          <ArrowButton isUp={false} onClick={handleDownClick} />
         </div>
       </div>
     </div>
@@ -209,27 +234,89 @@ export function RadioGroup({
   );
 }
 
-export function SubmitButton(): JSX.Element {
-  return (
-    <button
-      type="submit"
-      className="grid h-13.25 w-35 appearance-none place-items-center rounded-[1.65625rem] border-0 bg-red-400 p-0"
-    >
-      <p className="text-preset-2">Submit</p>
-    </button>
-  );
-}
-
-export function HeaderContainer(): JSX.Element {
+export function HeaderContainer({
+  handleCloseModal,
+}: {
+  handleCloseModal: () => void;
+}): JSX.Element {
   return (
     <div className="w-full flex px-[1.45rem] items-center justify-between">
       <h2 className="text-preset-1">Settings</h2>
-      <CloseButton />
+      <CloseButton onClick={handleCloseModal} />
     </div>
   );
 }
 
-export function FormContainer(): JSX.Element {
+export function FormContainer({
+  handleCloseModal,
+}: {
+  handleCloseModal: () => void;
+}): JSX.Element {
+  const { settingState, dispatch } = useSetting();
+
+  const [pomodoroTime, setPomodoroTime] = useState(
+    settingState.pomodoroDuration,
+  );
+  const [shortBreakTime, setShortBreakTime] = useState(
+    settingState.shortBreakDuration,
+  );
+  const [longBreakTime, setLongBreakTime] = useState(
+    settingState.longBreakDuration,
+  );
+
+  const [selectedFont, setSelectedFont] = useState<FontType>(settingState.font);
+  const [selectedColor, setSelectedColor] = useState<ColorType>(
+    settingState.color,
+  );
+
+  const handleNumberInputChange = useCallback((id: string, value: number) => {
+    switch (id) {
+      case "pomodoro":
+        setPomodoroTime(value);
+        break;
+      case "shortBreak":
+        setShortBreakTime(value);
+        break;
+      case "longBreak":
+        setLongBreakTime(value);
+        break;
+    }
+  }, []);
+
+  const handleFontChange = useCallback((value: string) => {
+    setSelectedFont(value as FontType);
+  }, []);
+
+  const handleColorChange = useCallback((value: string) => {
+    setSelectedColor(value as ColorType);
+  }, []);
+
+  const handleSubmit = useCallback(
+    (event: React.FormEvent) => {
+      event.preventDefault();
+      dispatch({
+        type: "submitSettings",
+        payload: {
+          pomodoroDuration: pomodoroTime,
+          shortBreakDuration: shortBreakTime,
+          longBreakDuration: longBreakTime,
+          font: selectedFont,
+          color: selectedColor,
+        },
+      });
+      handleCloseModal();
+    },
+    [
+      pomodoroTime,
+      shortBreakTime,
+      longBreakTime,
+      selectedFont,
+      selectedColor,
+      dispatch,
+      handleCloseModal,
+    ],
+  );
+
   const FontOptions = [
     { id: "font-sans", value: "Sans" as FontType },
     { id: "font-serif", value: "Serif" as FontType },
@@ -249,16 +336,23 @@ export function FormContainer(): JSX.Element {
           <div className="flex flex-col gap-4">
             <h2 className="text-preset-5">TIME (MINUTES)</h2>
             <div className="flex flex-col gap-2">
-              <NumberInput id="pomodoro" title="Pomodoro" currentValue={25} />
+              <NumberInput
+                id="pomodoro"
+                title="Pomodoro"
+                defaultValue={25}
+                handleChange={handleNumberInputChange}
+              />
               <NumberInput
                 id="shortBreak"
                 title="Short Break"
-                currentValue={5}
+                defaultValue={5}
+                handleChange={handleNumberInputChange}
               />
               <NumberInput
                 id="longBreak"
                 title="Long Break"
-                currentValue={15}
+                defaultValue={15}
+                handleChange={handleNumberInputChange}
               />
             </div>
           </div>
@@ -275,7 +369,8 @@ export function FormContainer(): JSX.Element {
                 type="font"
                 name="font"
                 options={FontOptions}
-                currentValue="Sans"
+                currentValue={selectedFont}
+                onChange={handleFontChange}
               />
             </div>
           </div>
@@ -292,7 +387,8 @@ export function FormContainer(): JSX.Element {
                 type="color"
                 name="color"
                 options={ColorOptions}
-                currentValue="red"
+                currentValue={selectedColor}
+                onChange={handleColorChange}
               />
             </div>
           </div>
@@ -300,18 +396,28 @@ export function FormContainer(): JSX.Element {
       </div>
 
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
-        <SubmitButton />
+        <button
+          type="submit"
+          className="grid h-13.25 w-35 appearance-none place-items-center rounded-[1.65625rem] border-0 bg-red-400 p-0"
+          onClick={handleSubmit}
+        >
+          <p className="text-preset-2">Submit</p>
+        </button>
       </div>
     </form>
   );
 }
 
-export function ModalContainer(): JSX.Element {
+export function ModalContainer({
+  handleCloseModal,
+}: {
+  handleCloseModal: () => void;
+}): JSX.Element {
   return (
     <div className="w-[20.44rem] md:w-135 flex flex-col gap-4 pt-[1.13rem] pb-[0.34375rem] bg-white rounded-[0.9375rem]">
-      <HeaderContainer />
+      <HeaderContainer handleCloseModal={handleCloseModal} />
       <div className="separator" />
-      <FormContainer />
+      <FormContainer handleCloseModal={handleCloseModal} />
     </div>
   );
 }

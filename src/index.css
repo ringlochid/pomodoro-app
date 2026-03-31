@@ -2,9 +2,9 @@
 @import "tailwindcss";
 
 :root {
-  --font-sans: "Kumbh Sans";
-  --font-serif: "Roboto Slab";
-  --font-mono: "Space Mono";
+  --font-sans: "Kumbh Sans", sans-serif;
+  --font-serif: "Roboto Slab", serif;
+  --font-mono: "Space Mono", monospace;
 
   --font-timer: "Kumbh Sans";
 
@@ -153,7 +153,6 @@ html[data-font="Mono"] {
 
   font-family: var(--font-timer);
   font-size: 5rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 125%; /* 6.25rem */
   letter-spacing: -0.3125rem;
@@ -163,10 +162,8 @@ html[data-font="Mono"] {
   color: var(--colors-blue-100, #d7e0ff);
   text-align: center;
 
-  /* Text Preset 2 (Mobile, Font 1) - Kumbh Sans Bold - 14px - 120% Line Height - 13px Line Spacing */
   font-family: var(--font-timer);
   font-size: 0.875rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 120%; /* 1.05rem */
   letter-spacing: 0.8125rem;
@@ -174,7 +171,7 @@ html[data-font="Mono"] {
 
 @utility stroke-preset-1 {
   fill: none;
-  stroke: var(--colors-clock-progress-ring, #f87070);
+  stroke: var(--color-clock-progress-ring);
   stroke-width: 8px;
   stroke-linecap: round;
   transform: rotate(-90deg);

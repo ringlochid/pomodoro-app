@@ -1,8 +1,12 @@
-import { JSX } from "react";
+import { type JSX } from "react";
 
-export function SettingsButton(): JSX.Element {
+export function SettingsButton({
+  onClick,
+}: {
+  onClick: () => void;
+}): JSX.Element {
   return (
-    <button className="appearence-none" aria-label="setting">
+    <button className="appearence-none" aria-label="setting" onClick={onClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="27"
@@ -21,6 +25,10 @@ export function SettingsButton(): JSX.Element {
   );
 }
 
-export function TailContainer(): JSX.Element {
-  return <SettingsButton />;
+export function TailContainer({
+  handleOpenModal,
+}: {
+  handleOpenModal: () => void;
+}): JSX.Element {
+  return <SettingsButton onClick={handleOpenModal} />;
 }
