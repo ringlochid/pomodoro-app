@@ -6,6 +6,7 @@ import { TailContainer } from "./components/tailContainer";
 import { SettingProvider } from "./components/settingProvider";
 import { useCallback, useState, type JSX } from "react";
 import { useSettingEffect } from "./hooks/useSetting";
+import { TimeProvider } from "./components/timeProvider";
 
 function MainPage(): JSX.Element {
   const [isMoadalOpen, setIsModalOpen] = useState(false);
@@ -38,7 +39,9 @@ function MainPage(): JSX.Element {
 function App() {
   return (
     <SettingProvider>
-      <MainPage />
+      <TimeProvider>
+        <MainPage />
+      </TimeProvider>
     </SettingProvider>
   );
 }

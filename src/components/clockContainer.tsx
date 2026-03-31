@@ -1,5 +1,4 @@
 import type { JSX } from "react";
-import { useSettingEffect } from "../hooks/useSetting";
 
 export function ProgressRing({ progress }: { progress: number }): JSX.Element {
   const radius = 120;

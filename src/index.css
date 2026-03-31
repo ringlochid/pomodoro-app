@@ -2,12 +2,6 @@
 @import "tailwindcss";
 
 :root {
-  --font-sans: "Kumbh Sans", sans-serif;
-  --font-serif: "Roboto Slab", serif;
-  --font-mono: "Space Mono", monospace;
-
-  --font-timer: "Kumbh Sans";
-
   --color-white: #fff;
 
   --color-blue-50: #eff1fa;
@@ -24,6 +18,12 @@
   --color-grey-200: #e3e1e1;
 
   --color-clock-progress-ring: var(--color-red-400);
+
+  --timer-font-family: "Kumbh Sans", sans-serif;
+  --timer-font-size: 5rem;
+  --timer-font-weight: 700;
+  --timer-line-height: 125%;
+  --timer-letter-spacing: -0.3125rem;
 }
 
 html[data-color="red"] {
@@ -39,15 +39,21 @@ html[data-color="purple"] {
 }
 
 html[data-font="Sans"] {
-  --font-timer: var(--font-sans);
+  --timer-font-family: "Kumbh Sans", sans-serif;
+  --timer-font-weight: 700;
+  --timer-letter-spacing: -0.3125rem;
 }
 
 html[data-font="Serif"] {
-  --font-timer: var(--font-serif);
+  --timer-font-family: "Roboto Slab", serif;
+  --timer-font-weight: 700;
+  --timer-letter-spacing: 0;
 }
 
 html[data-font="Mono"] {
-  --font-timer: var(--font-mono);
+  --timer-font-family: "Space Mono", monospace;
+  --timer-font-weight: 350;
+  --timer-letter-spacing: -0.3125rem;
 }
 
 @theme {
@@ -148,14 +154,14 @@ html[data-font="Mono"] {
 }
 
 @utility text-preset-8 {
-  color: var(--colors-blue-100, #d7e0ff);
+  color: var(--color-blue-100);
   text-align: center;
-
-  font-family: var(--font-timer);
+  font-family: var(--timer-font-family);
   font-size: 5rem;
-  font-weight: 700;
-  line-height: 125%; /* 6.25rem */
-  letter-spacing: -0.3125rem;
+  font-style: normal;
+  font-weight: var(--timer-font-weight);
+  line-height: 125%;
+  letter-spacing: var(--timer-letter-spacing);
 }
 
 @utility text-preset-9 {
