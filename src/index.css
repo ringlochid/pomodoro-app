@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+@import url(
+  "https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&family=Roboto+Slab:wght@700&family=Space+Mono:wght@400;700&display=swap"
+);
 @import "tailwindcss";
 
 :root {
@@ -73,9 +75,14 @@ html[data-font="Mono"] {
 
   --color-clock-progress-ring: var(--color-clock-progress-ring);
 
-  --font-sans: var(--font-sans);
-  --font-serif: var(--font-serif);
-  --font-mono: var(--font-mono);
+  --font-sans: "Kumbh Sans", sans-serif;
+  --font-serif: "Roboto Slab", serif;
+  --font-mono: "Space Mono", monospace;
+}
+
+body {
+  margin: 0;
+  font-family: "Kumbh Sans", sans-serif;
 }
 
 @utility text-preset-1 {
@@ -157,10 +164,9 @@ html[data-font="Mono"] {
   color: var(--color-blue-100);
   text-align: center;
   font-family: var(--timer-font-family);
-  font-size: 5rem;
   font-style: normal;
   font-weight: var(--timer-font-weight);
-  line-height: 125%;
+  line-height: 1;
   letter-spacing: var(--timer-letter-spacing);
 }
 
@@ -168,11 +174,29 @@ html[data-font="Mono"] {
   color: var(--colors-blue-100, #d7e0ff);
   text-align: center;
 
-  font-family: var(--font-timer);
-  font-size: 0.875rem;
+  font-family: "Kumbh Sans";
   font-weight: 700;
   line-height: 120%; /* 1.05rem */
   letter-spacing: 0.8125rem;
+}
+
+@utility timer-text {
+  color: var(--color-blue-100);
+  text-align: center;
+  font-family: var(--timer-font-family);
+  font-style: normal;
+  font-weight: var(--timer-font-weight);
+  line-height: 1;
+  letter-spacing: var(--timer-letter-spacing);
+}
+
+@utility timer-control-text {
+  color: var(--color-blue-100);
+  text-align: center;
+  font-family: "Kumbh Sans";
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.75em;
 }
 
 @utility stroke-preset-1 {

@@ -25,7 +25,7 @@ export function RadioButton({
   onChange?: (value: TimeMode) => void;
 }): JSX.Element {
   return (
-    <div>
+    <div className="flex-1">
       <input
         type="radio"
         id={id}
@@ -37,9 +37,9 @@ export function RadioButton({
       />
       <label
         htmlFor={id}
-        className="grid h-12 w-[6.56rem] place-items-center rounded-[1.96875rem] bg-blue-900 text-preset-7 text-blue-100 peer-checked:bg-red-400 peer-checked:text-blue-850"
+        className="flex h-12 min-w-25 items-center justify-center rounded-full px-4 text-center text-xs font-bold text-blue-100 transition-colors md:h-14 md:min-w-28 md:px-5 md:text-sm lg:min-w-32 lg:px-6 peer-checked:bg-clock-progress-ring peer-checked:text-blue-850"
       >
-        <p>{title}</p>
+        <span>{title}</span>
       </label>
     </div>
   );
@@ -57,7 +57,7 @@ export function RadioGroup({
   onChange?: (value: TimeMode) => void;
 }): JSX.Element {
   return (
-    <div className="w-full justify-center items-center rounded-[1.96875rem] flex bg-blue-900 gap-0">
+    <div className="inline-flex w-full items-center justify-center rounded-full bg-blue-900 p-2 md:p-2.5">
       {options.map((option) => (
         <RadioButton
           key={option.id}
@@ -134,8 +134,10 @@ export function HeaderContainer(): JSX.Element {
   );
 
   return (
-    <div className="w-[88svw] flex flex-col gap-10 items-center justify-center">
-      <h1 className="text-preset-6">pomodoro</h1>
+    <div className="flex w-full max-w-82 flex-col items-center gap-8 md:max-w-140 md:gap-12 lg:gap-14">
+      <h1 className="font-sans text-2xl font-bold text-blue-100 md:text-3xl lg:text-4xl">
+        pomodoro
+      </h1>
       <RadioGroup
         name="timer-type"
         options={options}

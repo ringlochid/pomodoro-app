@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useState, type JSX } from "react";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type FormEvent,
+  type JSX,
+} from "react";
 import { useSetting } from "../hooks/useSetting";
 import { useTime } from "../hooks/useTime";
 
@@ -49,7 +55,7 @@ export function CloseButton({ onClick }: { onClick: () => void }): JSX.Element {
     <button
       type="button"
       name="close"
-      className="m-0 grid h-[0.7955rem] w-[0.7955rem] cursor-pointer appearance-none place-items-center border-0 bg-transparent p-0"
+      className="m-0 grid size-3.5 cursor-pointer appearance-none place-items-center border-0 bg-transparent p-0 text-blue-900/50 transition-colors hover:text-blue-900 md:size-4"
       onClick={onClick}
       aria-label="close button"
     >
@@ -61,10 +67,10 @@ export function CloseButton({ onClick }: { onClick: () => void }): JSX.Element {
         fill="none"
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M12.7279 1.41421L11.3137 0L6.36396 4.94975L1.41421 0L0 1.41421L4.94975 6.36396L0 11.3137L1.41421 12.7279L6.36396 7.77817L11.3137 12.7279L12.7279 11.3137L7.77817 6.36396L12.7279 1.41421Z"
-          fill="#1E213F"
+          fill="currentColor"
         />
       </svg>
     </button>
@@ -96,7 +102,7 @@ export function ArrowButton({
           <path
             d="M0.554688 5.20184L6.55469 1.20184L12.5547 5.20184"
             stroke="#BBBDCB"
-            stroke-width="2"
+            strokeWidth="2"
           />
         </svg>
       ) : (
@@ -110,7 +116,7 @@ export function ArrowButton({
           <path
             d="M0.554688 0.832031L6.55469 4.83203L12.5547 0.832031"
             stroke="#BBBDCB"
-            stroke-width="2"
+            strokeWidth="2"
           />
         </svg>
       )}
@@ -144,11 +150,11 @@ export function NumberInput({
   }, [id, value, handleChange]);
 
   return (
-    <div className="flex w-full items-center justify-between gap-4">
-      <label htmlFor={id} className="text-preset-4 opacity-40">
+    <div className="flex w-full items-center justify-between gap-4 md:flex-col md:items-start md:gap-2">
+      <label htmlFor={id} className="text-xs font-bold text-blue-900/40">
         {title}
       </label>
-      <div className="flex h-10 w-35 items-center rounded-[0.625rem] bg-blue-50 px-4 py-3">
+      <div className="flex h-10 w-35 items-center rounded-xl bg-blue-50 px-4 py-3">
         <input
           type="text"
           id={id}
@@ -158,7 +164,7 @@ export function NumberInput({
           max={60}
           readOnly
           inputMode="numeric"
-          className="block min-w-0 flex-1 bg-transparent text-preset-3 tracking-normal outline-none"
+          className="block min-w-0 flex-1 bg-transparent text-sm font-bold text-blue-900 outline-none"
         />
         <div className="ml-4 flex shrink-0 flex-col items-center gap-0.5">
           <ArrowButton isUp={true} onClick={handleUpClick} />
@@ -185,7 +191,7 @@ export function RadioGroup({
   const config = radioGroupConfig[type];
 
   return (
-    <div className="w-full flex gap-4 items-center justify-center">
+    <div className="flex w-full items-center justify-center gap-4 md:w-auto">
       {options.map((option) => {
         const isChecked = config.isChecked(option, currentValue);
 
@@ -193,7 +199,7 @@ export function RadioGroup({
           <div key={option.id}>
             <label
               htmlFor={option.id}
-              className={`grid place-items-center w-10 h-10 rounded-full ${isChecked ? config.checkedClass : config.uncheckedClass} ${type === "color" ? config.bgClass?.[option.value as ColorType] : ""}`}
+              className={`grid size-10 place-items-center rounded-full transition-colors ${isChecked ? config.checkedClass : config.uncheckedClass} ${type === "color" ? config.bgClass?.[option.value as ColorType] : ""}`}
             >
               {type === "color" && isChecked && (
                 <svg
@@ -206,7 +212,7 @@ export function RadioGroup({
                   <path
                     d="M0.707031 5.20709L4.65966 9.15972L13.1123 0.707092"
                     stroke="#161932"
-                    stroke-width="2"
+                    strokeWidth="2"
                   />
                 </svg>
               )}
@@ -241,8 +247,8 @@ export function HeaderContainer({
   handleCloseModal: () => void;
 }): JSX.Element {
   return (
-    <div className="w-full flex px-[1.45rem] items-center justify-between">
-      <h2 className="text-preset-1">Settings</h2>
+    <div className="flex w-full items-center justify-between px-6 md:px-10">
+      <h2 className="text-2xl font-bold text-blue-900 md:text-3xl">Settings</h2>
       <CloseButton onClick={handleCloseModal} />
     </div>
   );
@@ -295,7 +301,7 @@ export function FormContainer({
   }, []);
 
   const handleSubmit = useCallback(
-    (event: React.FormEvent) => {
+    (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       const newState = {
         pomodoroDuration: pomodoroTime,
@@ -356,13 +362,15 @@ export function FormContainer({
     { id: "color-green", value: "purple" as ColorType },
   ];
   return (
-    <form className="relative flex flex-col gap-0">
-      <div className="flex flex-col gap-6 px-[1.44rem] pb-14">
+    <form className="relative flex flex-col" onSubmit={handleSubmit}>
+      <div className="flex flex-col gap-6 px-6 pb-14 md:px-10 md:pb-16">
         <fieldset className="m-0 min-w-0 border-0 p-0">
           <legend className="sr-only">Time settings</legend>
           <div className="flex flex-col gap-4">
-            <h2 className="text-preset-5">TIME (MINUTES)</h2>
-            <div className="flex flex-col gap-2">
+            <h2 className="text-center text-xs font-bold tracking-[0.3em] text-blue-900 md:text-left">
+              TIME (MINUTES)
+            </h2>
+            <div className="flex flex-col gap-2 md:grid md:grid-cols-3 md:gap-5">
               <NumberInput
                 id="pomodoro"
                 title="Pomodoro"
@@ -385,39 +393,39 @@ export function FormContainer({
           </div>
         </fieldset>
 
-        <div className="separator" />
+        <div className="h-px w-full bg-gray-200" />
 
         <fieldset className="m-0 flex min-w-0 flex-col gap-4 border-0 p-0">
           <legend className="sr-only">Font settings</legend>
-          <div className="flex flex-col gap-4">
-            <h2 className="text-preset-5">FONT</h2>
-            <div className="flex flex-col gap-2">
-              <RadioGroup
-                type="font"
-                name="font"
-                options={FontOptions}
-                currentValue={selectedFont}
-                onChange={handleFontChange}
-              />
-            </div>
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <h2 className="text-center text-xs font-bold tracking-[0.3em] text-blue-900 md:text-left">
+              FONT
+            </h2>
+            <RadioGroup
+              type="font"
+              name="font"
+              options={FontOptions}
+              currentValue={selectedFont}
+              onChange={handleFontChange}
+            />
           </div>
         </fieldset>
 
-        <div className="separator" />
+        <div className="h-px w-full bg-gray-200" />
 
         <fieldset className="m-0 flex min-w-0 flex-col gap-4 border-0 p-0">
           <legend className="sr-only">Color settings</legend>
-          <div className="flex flex-col gap-4">
-            <h2 className="text-preset-5">COLOR</h2>
-            <div className="flex flex-col gap-2">
-              <RadioGroup
-                type="color"
-                name="color"
-                options={ColorOptions}
-                currentValue={selectedColor}
-                onChange={handleColorChange}
-              />
-            </div>
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <h2 className="text-center text-xs font-bold tracking-[0.3em] text-blue-900 md:text-left">
+              COLOR
+            </h2>
+            <RadioGroup
+              type="color"
+              name="color"
+              options={ColorOptions}
+              currentValue={selectedColor}
+              onChange={handleColorChange}
+            />
           </div>
         </fieldset>
       </div>
@@ -425,10 +433,9 @@ export function FormContainer({
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
         <button
           type="submit"
-          className="grid h-13.25 w-35 appearance-none place-items-center rounded-[1.65625rem] border-0 bg-red-400 p-0"
-          onClick={handleSubmit}
+          className="grid h-13.25 w-35 appearance-none place-items-center rounded-full border-0 bg-red-400 p-0 text-white transition-opacity hover:opacity-90"
         >
-          <p className="text-preset-2">Submit</p>
+          <p className="text-base font-bold">Apply</p>
         </button>
       </div>
     </form>
@@ -441,9 +448,9 @@ export function ModalContainer({
   handleCloseModal: () => void;
 }): JSX.Element {
   return (
-    <div className="w-[20.44rem] md:w-135 flex flex-col gap-4 pt-[1.13rem] pb-[0.34375rem] bg-white rounded-[0.9375rem]">
+    <div className="flex w-full max-w-82 flex-col gap-4 rounded-3xl bg-white pt-6 shadow-2xl md:max-w-135 md:pt-8">
       <HeaderContainer handleCloseModal={handleCloseModal} />
-      <div className="separator" />
+      <div className="h-px w-full bg-gray-200" />
       <FormContainer handleCloseModal={handleCloseModal} />
     </div>
   );

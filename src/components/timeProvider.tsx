@@ -57,7 +57,7 @@ const reducer = (state: TimeStateType, action: TimeActionType) => {
       return {
         ...state,
         remainingTime: state.totalTime,
-        isRunning: false,
+        isRunning: true,
         isCompleted: false,
       };
 

@@ -10,13 +10,13 @@ export function ProgressRing({ progress }: { progress: number }): JSX.Element {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 249 249"
-      className="absolute z-100 w-[84%] h-[84%] pointer-events-none"
+      className="pointer-events-none absolute inset-3 md:inset-4 lg:inset-5"
     >
       <circle
         cx="124.5"
         cy="124.5"
         r={radius}
-        className="stroke-preset-1 z-100"
+        className="stroke-preset-1"
         style={{
           strokeDasharray: circumference,
           strokeDashoffset: dashOffset,
@@ -35,7 +35,7 @@ export function ActionButton({
 }): JSX.Element {
   return (
     <button
-      className="appearence-none text-preset-9 cursor-pointer hover:text-red-400"
+      className="timer-control-text appearance-none cursor-pointer text-xs transition-colors hover:text-clock-progress-ring md:text-sm lg:text-base"
       onClick={onClick}
     >
       {label}
@@ -53,9 +53,11 @@ export function TimerContainer({
   buttonLabel: "START" | "PAUSE" | "RESUME" | "RESTART";
 }): JSX.Element {
   return (
-    <div className="grid aspect-square size-[16.73781rem] rounded-full place-items-center bg-blue-900">
-      <div className="flex flex-col items-center justify-center gap-0">
-        <h2 className="text-preset-8">{time}</h2>
+    <div className="absolute inset-4 grid place-items-center rounded-full bg-blue-900 md:inset-5 lg:inset-6">
+      <div className="flex flex-col items-center gap-4 md:gap-5">
+        <h2 className="timer-text text-7xl md:text-8xl lg:text-9xl">
+          {time}
+        </h2>
         <ActionButton onClick={handleTimerAction} label={buttonLabel} />
       </div>
     </div>
@@ -105,7 +107,7 @@ export function ClockContainer(): JSX.Element {
   }, [dispatch, isCompleted, isRunning]);
 
   return (
-    <div className="grid place-items-center aspect-square relative gap-0 size-75 clock-container">
+    <div className="clock-container relative grid aspect-square size-75 place-items-center rounded-full md:size-102 lg:size-120">
       <TimerContainer
         time={formattedTime}
         handleTimerAction={handleTimerAction}
