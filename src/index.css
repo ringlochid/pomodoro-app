@@ -6,6 +6,8 @@
   --font-serif: "Roboto Slab";
   --font-mono: "Space Mono";
 
+  --font-timer: "Kumbh Sans";
+
   --color-white: #fff;
 
   --color-blue-50: #eff1fa;
@@ -22,6 +24,30 @@
   --color-grey-200: #e3e1e1;
 
   --color-clock-progress-ring: var(--color-red-400);
+}
+
+html[data-color="red"] {
+  --color-clock-progress-ring: var(--color-red-400);
+}
+
+html[data-color="cyan"] {
+  --color-clock-progress-ring: var(--color-cyan-300);
+}
+
+html[data-color="purple"] {
+  --color-clock-progress-ring: var(--color-purple-400);
+}
+
+html[data-font="Sans"] {
+  --font-timer: var(--font-sans);
+}
+
+html[data-font="Serif"] {
+  --font-timer: var(--font-serif);
+}
+
+html[data-font="Mono"] {
+  --font-timer: var(--font-mono);
 }
 
 @theme {
@@ -125,7 +151,7 @@
   color: var(--colors-blue-100, #d7e0ff);
   text-align: center;
 
-  font-family: "Kumbh Sans";
+  font-family: var(--font-timer);
   font-size: 5rem;
   font-style: normal;
   font-weight: 700;
@@ -138,7 +164,7 @@
   text-align: center;
 
   /* Text Preset 2 (Mobile, Font 1) - Kumbh Sans Bold - 14px - 120% Line Height - 13px Line Spacing */
-  font-family: "Kumbh Sans";
+  font-family: var(--font-timer);
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 700;

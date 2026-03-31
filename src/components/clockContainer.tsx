@@ -1,9 +1,10 @@
 import type { JSX } from "react";
+import { useSettingEffect } from "../hooks/useSetting";
 
 export function ProgressRing({ progress }: { progress: number }): JSX.Element {
   const radius = 120;
   const circumference = 2 * Math.PI * radius;
-  const dashOffset = -circumference * (1 - progress);
+  const dashOffset = circumference * (1 - progress);
 
   return (
     <svg
@@ -41,6 +42,7 @@ export function TimerContainer(): JSX.Element {
 }
 
 export function ClockContainer(): JSX.Element {
+  useSettingEffect();
   return (
     <div className="grid place-items-center aspect-square relative gap-0 size-75 clock-container">
       <TimerContainer />
