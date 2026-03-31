@@ -20,6 +20,8 @@
   --color-purple-400: #d881f8;
 
   --color-grey-200: #e3e1e1;
+
+  --color-clock-progress-ring: var(--color-red-400);
 }
 
 @theme {
@@ -36,6 +38,8 @@
   --color-purple-400: var(--color-purple-400);
 
   --color-gray-200: var(--color-grey-200);
+
+  --color-clock-progress-ring: var(--color-clock-progress-ring);
 
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
@@ -140,6 +144,16 @@
   font-weight: 700;
   line-height: 120%; /* 1.05rem */
   letter-spacing: 0.8125rem;
+}
+
+@utility stroke-preset-1 {
+  fill: none;
+  stroke: var(--colors-clock-progress-ring, #f87070);
+  stroke-width: 8px;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transform-box: fill-box;
 }
 
 @utility separator {

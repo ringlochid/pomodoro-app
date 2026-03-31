@@ -1,18 +1,25 @@
-import { JSX } from "react";
+import type { JSX } from "react";
 
-export function ProgressRing(): JSX.Element {
+export function ProgressRing({ progress }: { progress: number }): JSX.Element {
+  const radius = 120;
+  const circumference = 2 * Math.PI * radius;
+  const dashOffset = -circumference * (1 - progress);
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="249"
-      height="249"
       viewBox="0 0 249 249"
-      fill="none"
-      className="absolute z-100"
+      className="absolute z-100 w-[84%] h-[84%]"
     >
-      <path
-        d="M21.2459 54.5866C22.4917 52.746 24.9938 52.2639 26.8344 53.5097C28.675 54.7556 29.1571 57.2577 27.9113 59.0983C15.0351 78.1209 8.04878 100.546 8.04878 124.024C8.04878 188.076 59.9728 240 124.024 240C188.076 240 240 188.076 240 124.024C240 59.9728 188.076 8.04878 124.024 8.04878C121.802 8.04878 120 6.247 120 4.02439C120 1.80178 121.802 0 124.024 0C192.521 0 248.049 55.5276 248.049 124.024C248.049 192.521 192.521 248.049 124.024 248.049C55.5276 248.049 0 192.521 0 124.024C0 98.9252 7.47514 74.9308 21.2459 54.5866Z"
-        fill="#F87070"
+      <circle
+        cx="124.5"
+        cy="124.5"
+        r={radius}
+        className="stroke-preset-1 z-100"
+        style={{
+          strokeDasharray: circumference,
+          strokeDashoffset: dashOffset,
+        }}
       />
     </svg>
   );
@@ -36,8 +43,8 @@ export function TimerContainer(): JSX.Element {
 export function ClockContainer(): JSX.Element {
   return (
     <div className="grid place-items-center aspect-square relative gap-0 size-75 clock-container">
-      <ProgressRing />
       <TimerContainer />
+      <ProgressRing progress={0.75} />
     </div>
   );
 }
