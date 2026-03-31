@@ -183,6 +183,7 @@ html[data-font="Mono"] {
   transform: rotate(-90deg);
   transform-origin: center;
   transform-box: fill-box;
+  transition: stroke-dashoffset 1s ease;
 }
 
 @utility separator {

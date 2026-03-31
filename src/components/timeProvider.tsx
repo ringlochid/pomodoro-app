@@ -19,6 +19,24 @@ const reducer = (state: TimeStateType, action: TimeActionType) => {
         isCompleted: false,
       };
 
+    case "reduceTimer": {
+      const newRemainingTime = Math.max(state.remainingTime - 1, 0);
+
+      if (newRemainingTime === 0) {
+        return {
+          ...state,
+          remainingTime: 0,
+          isRunning: false,
+          isCompleted: true,
+        };
+      }
+
+      return {
+        ...state,
+        remainingTime: newRemainingTime,
+      };
+    }
+
     case "pauseTimer":
       return {
         ...state,
@@ -28,9 +46,9 @@ const reducer = (state: TimeStateType, action: TimeActionType) => {
     case "resetTimer":
       return {
         ...state,
-        totalTime: action.nextState.totalTime,
-        remainingTime: action.nextState.totalTime,
-        currentMode: action.nextState.currentMode,
+        totalTime: action.nextState.total,
+        remainingTime: action.nextState.total,
+        currentMode: action.nextState.mode,
         isRunning: false,
         isCompleted: false,
       };

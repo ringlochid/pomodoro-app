@@ -1,5 +1,6 @@
-import { useCallback, useContext, useEffect, useState, type JSX } from "react";
+import { useCallback, useEffect, useState, type JSX } from "react";
 import { useSetting } from "../hooks/useSetting";
+import { useTime } from "../hooks/useTime";
 
 type RadioGroupType = "font" | "color";
 
@@ -252,7 +253,7 @@ export function FormContainer({
 }: {
   handleCloseModal: () => void;
 }): JSX.Element {
-  const { settingState, dispatch } = useSetting();
+  const { settingState, dispatch: settingDispatch } = useSetting();
 
   const [pomodoroTime, setPomodoroTime] = useState(
     settingState.pomodoroDuration,
@@ -268,6 +269,8 @@ export function FormContainer({
   const [selectedColor, setSelectedColor] = useState<ColorType>(
     settingState.color,
   );
+
+  const { dispatch: timeDispatch } = useTime();
 
   const handleNumberInputChange = useCallback((id: string, value: number) => {
     switch (id) {
@@ -294,16 +297,38 @@ export function FormContainer({
   const handleSubmit = useCallback(
     (event: React.FormEvent) => {
       event.preventDefault();
-      dispatch({
+      const newState = {
+        pomodoroDuration: pomodoroTime,
+        shortBreakDuration: shortBreakTime,
+        longBreakDuration: longBreakTime,
+        font: selectedFont,
+        color: selectedColor,
+      };
+
+      let durationChanged = false;
+
+      if (
+        pomodoroTime !== settingState.pomodoroDuration ||
+        shortBreakTime !== settingState.shortBreakDuration ||
+        longBreakTime !== settingState.longBreakDuration
+      ) {
+        durationChanged = true;
+      }
+
+      settingDispatch({
         type: "submitSettings",
-        payload: {
-          pomodoroDuration: pomodoroTime,
-          shortBreakDuration: shortBreakTime,
-          longBreakDuration: longBreakTime,
-          font: selectedFont,
-          color: selectedColor,
-        },
+        payload: newState,
       });
+
+      if (durationChanged) {
+        timeDispatch({
+          type: "resetTimer",
+          nextState: {
+            total: pomodoroTime * 60,
+            mode: "pomodoro",
+          },
+        });
+      }
       handleCloseModal();
     },
     [
@@ -312,7 +337,9 @@ export function FormContainer({
       longBreakTime,
       selectedFont,
       selectedColor,
-      dispatch,
+      settingState,
+      settingDispatch,
+      timeDispatch,
       handleCloseModal,
     ],
   );

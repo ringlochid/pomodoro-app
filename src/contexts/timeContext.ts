@@ -19,13 +19,17 @@ export interface startTimerAction {
   type: "startTimer";
 }
 
+export interface reduceTimerAction {
+  type: "reduceTimer";
+}
+
 export interface pauseTimerAction {
   type: "pauseTimer";
 }
 
 export interface resetTimerAction {
   type: "resetTimer";
-  nextState: TimeStateType;
+  nextState: resetProps;
 }
 
 export interface restartTimerAction {
@@ -35,6 +39,7 @@ export interface restartTimerAction {
 export type TimeActionType =
   | startTimerAction
   | pauseTimerAction
+  | reduceTimerAction
   | resetTimerAction
   | restartTimerAction;
 
