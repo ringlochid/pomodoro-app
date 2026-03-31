@@ -308,7 +308,7 @@ export function FormContainer(): JSX.Element {
 
 export function ModalContainer(): JSX.Element {
   return (
-    <div className="w-[20.44rem] flex flex-col gap-4 pt-[1.13rem] pb-[0.34375rem] bg-white rounded-[0.9375rem]">
+    <div className="w-[20.44rem] md:w-135 flex flex-col gap-4 pt-[1.13rem] pb-[0.34375rem] bg-white rounded-[0.9375rem]">
       <HeaderContainer />
       <div className="separator" />
       <FormContainer />

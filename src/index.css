@@ -9,6 +9,7 @@
   --color-white: #fff;
 
   --color-blue-50: #eff1fa;
+  --color-blue-100: #d7e0ff;
   --color-blue-850: #1e213f;
   --color-blue-900: #161932;
 
@@ -98,6 +99,49 @@
   letter-spacing: 0.26444rem;
 }
 
+@utility text-preset-6 {
+  color: var(--colors-blue-100, #d7e0ff);
+  text-align: center;
+  font-family: "Kumbh Sans";
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+@utility text-preset-7 {
+  font-family: "Kumbh Sans";
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%; /* 0.9375rem */
+}
+
+@utility text-preset-8 {
+  color: var(--colors-blue-100, #d7e0ff);
+  text-align: center;
+
+  font-family: "Kumbh Sans";
+  font-size: 5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%; /* 6.25rem */
+  letter-spacing: -0.3125rem;
+}
+
+@utility text-preset-9 {
+  color: var(--colors-blue-100, #d7e0ff);
+  text-align: center;
+
+  /* Text Preset 2 (Mobile, Font 1) - Kumbh Sans Bold - 14px - 120% Line Height - 13px Line Spacing */
+  font-family: "Kumbh Sans";
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%; /* 1.05rem */
+  letter-spacing: 0.8125rem;
+}
+
 @utility separator {
   width: 100%;
   height: 0.0625rem;
@@ -112,6 +156,17 @@
   margin: -1px;
   overflow: hidden;
   border-width: 0;
+}
+
+@utility clock-container {
+  border-radius: 9.375rem;
+  background: var(
+    --colors-gradient-1,
+    linear-gradient(271deg, #2e325a 0%, #0e112a 100%)
+  );
+  box-shadow:
+    -50px -50px 100px 0 #272c5a,
+    50px 50px 100px 0 #121530;
 }
 
 * {
