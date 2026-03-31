@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-export type TimeMode = "pomodoro" | "shortBreak" | "longBreak";
+export type TimeMode = "pomodoro" | "short-break" | "long-break";
 
 export interface TimeStateType {
   currentMode: TimeMode;

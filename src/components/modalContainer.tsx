@@ -366,19 +366,19 @@ export function FormContainer({
               <NumberInput
                 id="pomodoro"
                 title="Pomodoro"
-                defaultValue={25}
+                defaultValue={settingState.pomodoroDuration}
                 handleChange={handleNumberInputChange}
               />
               <NumberInput
                 id="shortBreak"
                 title="Short Break"
-                defaultValue={5}
+                defaultValue={settingState.shortBreakDuration}
                 handleChange={handleNumberInputChange}
               />
               <NumberInput
                 id="longBreak"
                 title="Long Break"
-                defaultValue={15}
+                defaultValue={settingState.longBreakDuration}
                 handleChange={handleNumberInputChange}
               />
             </div>

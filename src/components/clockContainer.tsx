@@ -68,8 +68,13 @@ export function ClockContainer(): JSX.Element {
   const progress =
     totalTime === 0 ? 0 : (totalTime - remainingTime) / totalTime;
   const hasStarted = remainingTime < totalTime;
-  const buttonLabel: "START" | "PAUSE" | "RESUME" | "RESTART" =
-    isCompleted ? "RESTART" : isRunning ? "PAUSE" : hasStarted ? "RESUME" : "START";
+  const buttonLabel: "START" | "PAUSE" | "RESUME" | "RESTART" = isCompleted
+    ? "RESTART"
+    : isRunning
+      ? "PAUSE"
+      : hasStarted
+        ? "RESUME"
+        : "START";
 
   const formattedTime = `${Math.floor(remainingTime / 60)}:${String(remainingTime % 60).padStart(2, "0")}`;
 
