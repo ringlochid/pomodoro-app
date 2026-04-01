@@ -199,7 +199,7 @@ export function RadioGroup({
           <div key={option.id}>
             <label
               htmlFor={option.id}
-              className={`grid size-10 place-items-center rounded-full transition-colors ${isChecked ? config.checkedClass : config.uncheckedClass} ${type === "color" ? config.bgClass?.[option.value as ColorType] : ""}`}
+              className={`grid size-10 place-items-center rounded-full transition-colors cursor-pointer ${isChecked ? config.checkedClass : config.uncheckedClass} ${type === "color" ? config.bgClass?.[option.value as ColorType] : ""}`}
             >
               {type === "color" && isChecked && (
                 <svg
@@ -433,7 +433,7 @@ export function FormContainer({
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
         <button
           type="submit"
-          className="grid h-13.25 w-35 appearance-none place-items-center rounded-full border-0 bg-red-400 p-0 text-white transition-opacity hover:opacity-90"
+          className="grid h-13.25 w-35 appearance-none place-items-center rounded-full border-0 bg-red-400 p-0 text-white transition-opacity hover:opacity-95 cursor-pointer"
         >
           <p className="text-base font-bold">Apply</p>
         </button>
