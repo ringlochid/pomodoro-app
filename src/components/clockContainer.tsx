@@ -1,5 +1,34 @@
 import { useCallback, useEffect, type JSX } from "react";
+import type { TimeMode } from "../contexts/timeContext";
 import { useTime } from "../hooks/useTime";
+
+async function ensureNotificationPermission(): Promise<void> {
+  if (typeof window === "undefined" || !("Notification" in window)) {
+    return;
+  }
+
+  if (Notification.permission !== "default") {
+    return;
+  }
+
+  await Notification.requestPermission();
+}
+
+function notify(title: string, body: string): void {
+  if (typeof window === "undefined" || !("Notification" in window)) {
+    return;
+  }
+
+  if (Notification.permission !== "granted") {
+    return;
+  }
+
+  new Notification(title, { body });
+}
+
+function isBreakMode(mode: TimeMode): boolean {
+  return mode === "short-break" || mode === "long-break";
+}
 
 export function ProgressRing({ progress }: { progress: number }): JSX.Element {
   const radius = 120;
@@ -64,7 +93,8 @@ export function TimerContainer({
 
 export function ClockContainer(): JSX.Element {
   const { timeState, dispatch } = useTime();
-  const { totalTime, remainingTime, isRunning, isCompleted } = timeState;
+  const { currentMode, totalTime, remainingTime, isRunning, isCompleted } =
+    timeState;
   const progress =
     totalTime === 0 ? 0 : (totalTime - remainingTime) / totalTime;
   const hasStarted = remainingTime < totalTime;
@@ -78,6 +108,14 @@ export function ClockContainer(): JSX.Element {
 
   const formattedTime = `${Math.floor(remainingTime / 60)}:${String(remainingTime % 60).padStart(2, "0")}`;
 
+  const handleStartTimer = useCallback(async () => {
+    if (!hasStarted) {
+      await ensureNotificationPermission();
+    }
+
+    dispatch({ type: "startTimer" });
+  }, [dispatch, hasStarted]);
+
   const handleTimerAction = useCallback(() => {
     if (isCompleted) {
       dispatch({ type: "restartTimer" });
@@ -89,8 +127,8 @@ export function ClockContainer(): JSX.Element {
       return;
     }
 
-    dispatch({ type: "startTimer" });
-  }, [dispatch, isCompleted, isRunning]);
+    void handleStartTimer();
+  }, [dispatch, handleStartTimer, isCompleted, isRunning]);
 
   useEffect(() => {
     if (!isRunning || isCompleted) {
@@ -103,6 +141,19 @@ export function ClockContainer(): JSX.Element {
 
     return () => clearInterval(timer);
   }, [dispatch, isCompleted, isRunning]);
+
+  useEffect(() => {
+    if (remainingTime !== 0) {
+      return;
+    }
+
+    if (isBreakMode(currentMode)) {
+      notify("Pomodoro", "Break complete");
+      return;
+    }
+
+    notify("Pomodoro", "Focus session complete");
+  }, [currentMode, remainingTime]);
 
   return (
     <div className="clock-container relative grid aspect-square size-75 place-items-center rounded-full md:size-102 lg:size-120">
